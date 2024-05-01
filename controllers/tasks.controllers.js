@@ -7,6 +7,8 @@ const {
 } = require("../tasks/database.tasks");
 
 const getAllTasks = async (req, res) => {
+  const authHeader = req.headers["authorization"];
+  // console.log("authHeader", authHeader);
   const tasks = await getTasks();
   res.send(tasks);
 };

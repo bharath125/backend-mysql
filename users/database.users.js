@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 });
 
 async function getUsers() {
-  const query = "SELECT * FROM Users";
+  const query = "SELECT * FROM user";
   const [rows] = await pool.query(query);
   try {
     const users = await rows;
@@ -23,7 +23,7 @@ async function getUsers() {
 
 async function getUserById(userId) {
   const query = `
-  SELECT * from Users WHERE userId=?
+  SELECT * from user WHERE userId=?
   `;
   const [rows] = await pool.query(query, [userId]);
   try {
@@ -35,12 +35,26 @@ async function getUserById(userId) {
   }
 }
 
-async function createUser(user, password) {
+async function getUserByUserName(username) {
   const query = `
-  INSERT INTO Users (username,password_hash)
-  VALUES (?,?)
+  SELECT * from user WHERE username=?
   `;
-  const [rows] = await pool.query(query, [user, password]);
+  const [rows] = await pool.query(query, [username]);
+  try {
+    const user = await rows;
+    console.log("user from databe.users.js", user);
+    return user;
+  } catch (err) {
+    console.log(`Error while fetching user for ${id}: ${err}`);
+  }
+}
+
+async function createUser(user, password, role) {
+  const query = `
+  INSERT INTO user (username,password_hash,role)
+  VALUES (?,?,?)
+  `;
+  const [rows] = await pool.query(query, [user, password, role]);
   try {
     const users = await rows;
     // console.log("insertId", users.insertId);
@@ -53,4 +67,4 @@ async function createUser(user, password) {
 // async () => {};
 // getUsers();
 // createUser("test", "test");
-module.exports = { getUsers, getUserById, createUser };
+module.exports = { getUsers, getUserById, createUser, getUserByUserName };

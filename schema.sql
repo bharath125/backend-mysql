@@ -1,8 +1,9 @@
 --create user table
-CREATE TABLE Users(
+CREATE TABLE users(
     userId INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL,
-    password_hash TEXT NOT NULL
+    password_hash TEXT NOT NULL,
+    role ENUM('admin','manager','user') DEFAULT 'user',
 )
 
 --create tasks table
