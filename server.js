@@ -46,3 +46,5 @@ app.use("/users", usersRoutes);
 app.use("/login", loginRoutes);
 
 app.listen(3000, () => console.log("Server running at port 3000"));
+
+//Thank you for watching
